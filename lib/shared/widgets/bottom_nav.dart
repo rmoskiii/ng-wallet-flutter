@@ -4,9 +4,10 @@ import 'package:ngwallet_flutter/features/activity/screens/activity_screen.dart'
 import 'package:ngwallet_flutter/features/wallet/screens/wallet_screen.dart';
 import 'package:ngwallet_flutter/features/profile/screens/profile_screen.dart';
 import 'package:ngwallet_flutter/features/learn/screens/learn_screen.dart';
+import 'package:ngwallet_flutter/constants/menu_page.dart'; // ✅ your menu button lives here
 
 class BottomNav extends StatefulWidget {
-const BottomNav({super.key});
+  const BottomNav({super.key});
 
   @override
   State<BottomNav> createState() => _BottomNavState();
@@ -15,12 +16,20 @@ const BottomNav({super.key});
 class _BottomNavState extends State<BottomNav> {
   int _currentIndex = 0;
 
-  final List<Widget> _screens = [
+  final List<Widget> _screens = const [
     DashboardScreen(),
     ActivityScreen(),
     WalletScreen(),
     UserProfilePage(),
     LearnScreen(),
+  ];
+
+  final List<String> _titles = const [
+    "Dashboard",
+    "Activity",
+    "Wallet",
+    "Profile",
+    "Learn",
   ];
 
   void _onItemTapped(int index) {
@@ -32,6 +41,18 @@ class _BottomNavState extends State<BottomNav> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(_titles[_currentIndex]),
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const MenuPage()),
+            );
+          },
+        ),
+      ),
       body: _screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,

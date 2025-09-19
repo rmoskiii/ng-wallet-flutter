@@ -111,99 +111,105 @@ class LearnScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
-      body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(
-          vertical: isMobile ? 12 : 24,
-          horizontal: isMobile ? 8 : 16,
-        ),
-        child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 700),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  "Financial Wisdom Hub 🧠",
-                  style: TextStyle(
-                      fontSize: isMobile ? 20 : 24,
-                      fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  "Learn how to manage your money like a pro with bite-sized content on financial literacy.",
-                  style: TextStyle(color: theme.textTheme.bodyMedium?.color),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 24),
+      body: SafeArea(   // ✅ ensures content avoids notch & status bar
+        child: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(
+            vertical: isMobile ? 12 : 24,
+            horizontal: isMobile ? 8 : 16,
+          ),
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 700),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "Financial Wisdom Hub 🧠",
+                    style: TextStyle(
+                        fontSize: isMobile ? 20 : 24,
+                        fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    "Learn how to manage your money like a pro with bite-sized content on financial literacy.",
+                    style: TextStyle(color: theme.textTheme.bodyMedium?.color),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 24),
 
-                // Educational cards
-                for (var item in educationalContent)
+                  // Educational cards
+                  for (var item in educationalContent)
+                    Card(
+                      margin: const EdgeInsets.only(bottom: 16),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Icon(item["icon"] as IconData,
+                                      color: theme.colorScheme.primary),
+                                  const SizedBox(width: 8),
+                                  Expanded(
+                                    child: Text(
+                                      item["title"] as String,
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 12),
+                              item["content"] as Widget,
+                            ]),
+                      ),
+                    ),
+
+                  const SizedBox(height: 24),
+                  Text(
+                    "FAQs about Credit Building with NG Wallet",
+                    style: TextStyle(
+                        fontSize: isMobile ? 20 : 24,
+                        fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 12),
+
                   Card(
-                    margin: const EdgeInsets.only(bottom: 16),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Column(
+                      children: faqs.map((faq) {
+                        return ExpansionTile(
+                          title: Text(
+                            faq["q"]!,
+                            style: const TextStyle(fontWeight: FontWeight.w600),
+                          ),
                           children: [
-                            Row(
-                              children: [
-                                Icon(item["icon"] as IconData,
-                                    color: theme.colorScheme.primary),
-                                const SizedBox(width: 8),
-                                Text(
-                                  item["title"] as String,
-                                  style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
+                            Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Text(
+                                faq["a"]!,
+                                style: TextStyle(
+                                  color: theme.textTheme.bodySmall?.color,
+                                  fontSize: 14,
                                 ),
-                              ],
-                            ),
-                            const SizedBox(height: 12),
-                            item["content"] as Widget,
-                          ]),
+                              ),
+                            )
+                          ],
+                        );
+                      }).toList(),
                     ),
                   ),
-
-                const SizedBox(height: 24),
-                Text(
-                  "FAQs about Credit Building with NG Wallet",
-                  style: TextStyle(
-                      fontSize: isMobile ? 20 : 24,
-                      fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 12),
-
-                Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12)),
-                  child: Column(
-                    children: faqs.map((faq) {
-                      return ExpansionTile(
-                        title: Text(
-                          faq["q"]!,
-                          style: const TextStyle(fontWeight: FontWeight.w600),
-                        ),
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Text(
-                              faq["a"]!,
-                              style: TextStyle(
-                                color: theme.textTheme.bodySmall?.color,
-                                fontSize: 14,
-                              ),
-                            ),
-                          )
-                        ],
-                      );
-                    }).toList(),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -219,8 +225,16 @@ Widget _bullet(String text) {
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text("• ", style: TextStyle(fontSize: 14)),
-        Expanded(child: Text(text, style: const TextStyle(fontSize: 14))),
+        const SizedBox(
+          width: 16, // fixed space for bullet
+          child: Text("•", style: TextStyle(fontSize: 14)),
+        ),
+        Expanded(
+          child: Text(
+            text,
+            style: const TextStyle(fontSize: 14),
+          ),
+        ),
       ],
     ),
   );
