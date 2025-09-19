@@ -52,6 +52,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // Credit Wallet Score Card
             Card(
@@ -85,11 +86,28 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               isCurved: true,
                               color: Colors.green,
                               barWidth: 3,
-                              dotData: FlDotData(show: true),
+                              dotData: const FlDotData(show: true),
                             ),
                           ],
                           titlesData: FlTitlesData(
-                            leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: true)),
+                            leftTitles: AxisTitles(
+                              sideTitles: SideTitles(
+                                showTitles: true,
+                                interval: 100, // Show labels every 100 points
+                                getTitlesWidget: (value, meta) {
+                                  // Only show labels for our specific values
+                                  if (value % 100 == 0) {
+                                    final simplifiedValue = (value / 100).round();
+                                    return Text(
+                                      simplifiedValue.toString(),
+                                      style: const TextStyle(fontSize: 12),
+                                    );
+                                  }
+                                  return const Text('');
+                                },
+                                reservedSize: 30,
+                              ),
+                            ),
                             bottomTitles: AxisTitles(
                               sideTitles: SideTitles(
                                 showTitles: true,
@@ -100,6 +118,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 },
                               ),
                             ),
+                            topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                            rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
                           ),
                         ),
                       ),
@@ -157,9 +177,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       value: showProgress ? 0.75 : 0,
                       minHeight: 10,
                     ),
-                    Row(
+                    const SizedBox(height: 8),
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
+                      children: [
                         Text('₦450,000'),
                         Text('₦600,000', style: TextStyle(color: Colors.grey)),
                       ],
@@ -191,10 +212,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 children: scoreExplanations.entries.map((e) {
                   return ExpansionTile(
                     title: Text(e.key),
-                    children: [Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(e.value),
-                    )],
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(e.value),
+                      )
+                    ],
                   );
                 }).toList(),
               ),
@@ -203,12 +226,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
       ),
       floatingActionButton: reminderOpen
-            ? FloatingActionButton.extended(
-                onPressed: () => setState(() => reminderOpen = false),
-                label: const Text('Next auto-payment \u20A610 on Sep 5, 2024'),
-                icon: const Icon(Icons.warning),
-              )
-            : null,
+          ? FloatingActionButton.extended(
+              onPressed: () => setState(() => reminderOpen = false),
+              label: const Text('Next auto-payment ₦10 on Sep 5, 2024'),
+              icon: const Icon(Icons.warning),
+            )
+          : null,
     );
   }
 }

@@ -49,7 +49,7 @@ class _SignInScreenState extends State<SignInScreen> {
       if (email == dummyEmail && password == dummyPassword) {
         Future.delayed(const Duration(milliseconds: 500), () {
           if (!mounted) return;
-          Navigator.pushReplacementNamed(context, '/dashboard');
+          Navigator.pushReplacementNamed(context, '/bvn-verification');
         });
       } else {
         setState(() => loading = false);
