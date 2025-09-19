@@ -4,7 +4,7 @@ import 'package:ngwallet_flutter/features/activity/screens/activity_screen.dart'
 import 'package:ngwallet_flutter/features/wallet/screens/wallet_screen.dart';
 import 'package:ngwallet_flutter/features/profile/screens/profile_screen.dart';
 import 'package:ngwallet_flutter/features/learn/screens/learn_screen.dart';
-import 'package:ngwallet_flutter/constants/menu_page.dart'; // ✅ your menu button lives here
+import 'package:ngwallet_flutter/constants/menu_page.dart'; // 👈 import MenuPage
 
 class BottomNav extends StatefulWidget {
   const BottomNav({super.key});
@@ -43,16 +43,8 @@ class _BottomNavState extends State<BottomNav> {
     return Scaffold(
       appBar: AppBar(
         title: Text(_titles[_currentIndex]),
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const MenuPage()),
-            );
-          },
-        ),
       ),
+      drawer: const MenuPage(), // 👈 available on every tab
       body: _screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
