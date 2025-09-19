@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../features/dashboard/screens/dashboard_screen.dart';
-import '../../features/activity/screens/activity_screen.dart';
-import '../../features/wallet/screens/wallet_screen.dart';
-import '../../features/profile/screens/profile_screen.dart';
-import '../../features/learn/screens/learn_screen.dart';
+import 'package:ngwallet_flutter/features/dashboard/screens/dashboard_screen.dart';
+import 'package:ngwallet_flutter/features/activity/screens/activity_screen.dart';
+import 'package:ngwallet_flutter/features/wallet/screens/wallet_screen.dart';
+import 'package:ngwallet_flutter/features/profile/screens/profile_screen.dart';
+import 'package:ngwallet_flutter/features/learn/screens/learn_screen.dart';
 
 class BottomNav extends StatefulWidget {
 const BottomNav({super.key});
