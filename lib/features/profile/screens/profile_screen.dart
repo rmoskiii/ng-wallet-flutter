@@ -27,18 +27,12 @@ class _UserProfilePageState extends State<UserProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      appBar: AppBar(
-        title: const Text("Profile"),
-        centerTitle: true,
-      ),
-      body: SingleChildScrollView(
+    return SafeArea(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Card(
           elevation: 2,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -60,27 +54,22 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   children: [
                     TextField(
                       decoration: const InputDecoration(labelText: "Full Name"),
-                      controller:
-                          TextEditingController(text: "Ahmed Bello"),
+                      controller: TextEditingController(text: "Ahmed Bello"),
                       enabled: false,
                     ),
                     TextField(
                       decoration: const InputDecoration(labelText: "BVN"),
-                      controller:
-                          TextEditingController(text: "22111111111"),
+                      controller: TextEditingController(text: "22111111111"),
                       enabled: false,
                     ),
                     TextField(
                       decoration: const InputDecoration(labelText: "Email"),
-                      controller:
-                          TextEditingController(text: "abello92@example.com"),
+                      controller: TextEditingController(text: "abello92@example.com"),
                       enabled: false,
                     ),
                     TextField(
-                      decoration:
-                          const InputDecoration(labelText: "Phone Number"),
-                      controller:
-                          TextEditingController(text: "080-1234-5678"),
+                      decoration: const InputDecoration(labelText: "Phone Number"),
+                      controller: TextEditingController(text: "080-1234-5678"),
                       enabled: false,
                     ),
                   ],
@@ -96,17 +85,13 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   initiallyExpanded: true,
                   children: [
                     TextField(
-                      decoration:
-                          const InputDecoration(labelText: "Bank Name"),
-                      controller:
-                          TextEditingController(text: "First Bank of Nigeria"),
+                      decoration: const InputDecoration(labelText: "Bank Name"),
+                      controller: TextEditingController(text: "First Bank of Nigeria"),
                       enabled: false,
                     ),
                     TextField(
-                      decoration:
-                          const InputDecoration(labelText: "Account Number"),
-                      controller:
-                          TextEditingController(text: "0012345678"),
+                      decoration: const InputDecoration(labelText: "Account Number"),
+                      controller: TextEditingController(text: "0012345678"),
                       enabled: false,
                     ),
                     const SizedBox(height: 12),
@@ -155,7 +140,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         labelText: "Current Password",
                         suffixIcon: IconButton(
                           icon: Icon(
-                              showPassword ? Icons.visibility_off : Icons.visibility),
+                            showPassword ? Icons.visibility_off : Icons.visibility,
+                          ),
                           onPressed: () {
                             setState(() {
                               showPassword = !showPassword;
@@ -166,13 +152,11 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     ),
                     TextField(
                       obscureText: true,
-                      decoration:
-                          const InputDecoration(labelText: "New Password"),
+                      decoration: const InputDecoration(labelText: "New Password"),
                     ),
                     TextField(
                       obscureText: true,
-                      decoration: const InputDecoration(
-                          labelText: "Confirm New Password"),
+                      decoration: const InputDecoration(labelText: "Confirm New Password"),
                     ),
                     const SizedBox(height: 12),
                     ElevatedButton(
